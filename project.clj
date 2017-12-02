@@ -14,7 +14,8 @@
                                               com.sun.jdmk/jmxtools
                                               com.sun.jmx/jmxri]]]
    :plugins [[lein-ring "0.12.1"]]
-   :ring {:handler isitlit-server.handler/app}
+   :ring {:init isitlit-server.db/init
+          :handler isitlit-server.handler/app}
    :uberjar-name "server.jar"
    :profiles {:dev {:dependencies [[javax.servlet/javax.servlet-api "3.1.0"]]
                    :plugins [[lein-ring "0.12.0"]]}})

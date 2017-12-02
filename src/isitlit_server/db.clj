@@ -53,3 +53,25 @@
     (select isitlit
       (where {:currently_lit true})
       (fields :longitude :latitude))))
+
+(defn watch
+  []
+  (update isitlit
+    (where {:time [>= (t/minus (t/now) (t/hours 1))]})
+    (set-fields {:time (t/now) :currently_lit false})))
+
+(defn periodically
+  [f interval]
+  (doto (Thread.
+          #(try
+             (while (not (.isInterrupted (Thread/currentThread)))
+               (Thread/sleep interval)
+               (f))
+             (catch InterruptedException _)))
+    (.start)))
+
+(defn start
+  []
+  (periodically watch 1000))
+
+(def init start)
