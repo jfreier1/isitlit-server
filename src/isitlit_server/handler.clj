@@ -1,33 +1,22 @@
 (ns isitlit-server.handler
-  (:require [compojure.api.sweet :refer :all]
-            [ring.util.http-response :refer :all]
-            [schema.core :as s]
-            [isitlit-server.db :as db]))
+  (:require [isitlit-server.db :as db]
+            [compojure.core :refer :all]
+            [compojure.handler :as handler]
+            [compojure.route :as route]
+            [ring.middleware.json :as middleware]))
 
-(s/defschema lit-hit
-  {:uuid Long
-   :longitude Double
-   :latitude Double})
+(defroutes app-routes
+  (GET "/get-litness" []
+    {:status 200
+     :body (db/get-lit-hits)})
 
-(def app
-  (api
-    {:swagger
-     {:ui "/"
-      :spec "/swagger.json"
-      :data {:info {:title "Isitlit-server"
-                    :description "Compojure Api example"}
-             :tags [{:name "api", :description "some apis"}]}}}
+  (POST "/add-point" request
+    (let [body (:body request)
+          id (:id body)
+          lat (:latitude body)
+          long (:longitude body)]
+          {:status 200})))
 
-    (context "/api" []
-      :tags ["api"]
-
-      (GET "/get-litness" []
-        :return [[Double]]
-        :summary "gets litness"
-        (ok {:result [[Double]]))
-
-      (POST "/add-point" []
-        :return lit-hit
-        :body [lithit lit-hit]
-        :summary "echoes a Pizza"
-        (ok lithit)))))
+(def app (-> (handler/site app-routes)
+         (middleware/wrap-json-body {:keywords? true})
+         middleware/wrap-json-response))

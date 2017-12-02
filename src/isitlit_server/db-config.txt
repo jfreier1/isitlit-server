@@ -1,9 +1,9 @@
 CREATE TABLE isitlit
 (
-  id              INT unsigned NOT NULL AUTO_INCREMENT, # unique ID for the user,                               # users id
-  longitude       DOUBLE NOT NULL,                      # longitude of lit-hit
-  latitude        DOUBLE NOT NULL,                      # latitude of lit-hit
-  time            TIMESTAMP NOT NULL,                   # time of lit-hit
-  currently_lit   BOOL NOT NULL,                        # is the user lit rn
-  PRIMARY KEY     (id)                                  # Make the id the primary key
+  id              INT unsigned NOT NULL AUTO_INCREMENT,         # unique ID for the user,                               # users id
+  longitude       DOUBLE NOT NULL,                              # longitude of lit-hit
+  latitude        DOUBLE NOT NULL,                              # latitude of lit-hit
+  time            TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, # time of lit-hit
+  currently_lit   BOOL NOT NULL,                                # is the user lit rn
+  PRIMARY KEY     (id)                                          # Make the id the primary key
 );

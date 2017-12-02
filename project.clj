@@ -3,6 +3,8 @@
    :dependencies [[org.clojure/clojure "1.8.0"]
                   [metosin/compojure-api "1.1.11"]
                   [korma "0.4.3"]
+                  [org.clojure/java.jdbc "0.6.1"]
+                  [mysql/mysql-connector-java "5.1.25"]
                   [log4j "1.2.15" :exclusions [javax.mail/mail
                                               javax.jms/jms
                                               com.sun.jdmk/jmxtools
