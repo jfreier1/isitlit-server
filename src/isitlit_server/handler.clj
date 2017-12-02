@@ -9,6 +9,10 @@
   (GET "/get-litness" []
     {:status 200
      :body (db/get-lit-hits)})
+     
+  (GET "/get-id" []
+    {:status 200
+     :body (db/first-insert)})
 
   (POST "/add-point" request
     (let [body (:body request)
