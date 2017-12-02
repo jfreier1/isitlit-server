@@ -9,7 +9,7 @@
   (GET "/get-litness" []
     {:status 200
      :body (db/get-lit-hits)})
-     
+
   (GET "/get-id" []
     {:status 200
      :body (db/first-insert)})
@@ -17,8 +17,9 @@
   (POST "/add-point" request
     (let [body (:body request)
           id (:id body)
-          lat (:latitude body)
-          long (:longitude body)]
+          longitude (:longitude body)
+          latitude (:latitude body)]
+          (db/hit-lit id longitude latitude)
           {:status 200})))
 
 (def app (-> (handler/site app-routes)
